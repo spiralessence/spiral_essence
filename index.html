@@ -228,6 +228,20 @@ img { max-width: 100%; height: auto; display: block; }
 .button--light { background: var(--paper); color: var(--forest); border-color: var(--paper); }
 .button--light:hover { background: transparent; color: var(--paper); }
 
+/* Outline button (Instagram) on cream backgrounds */
+.button--outline { background: transparent; color: var(--forest); }
+.button--outline:hover { background: var(--forest); color: var(--paper); }
+
+/* Outline button on dark green backgrounds */
+.button--ghost-light { background: transparent; color: var(--paper); border-color: rgba(243, 237, 224, 0.6); }
+.button--ghost-light:hover { background: var(--paper); color: var(--forest); border-color: var(--paper); }
+
+.ig-button { margin-top: 2rem; }
+.ig-handle { font-weight: 500; opacity: 0.8; margin-left: 0.25rem; }
+.ig-button { white-space: nowrap; }
+@media (max-width: 720px) { .ig-lead { display: none; } }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 1rem 1.25rem; align-items: center; }
+
 .text-link {
   font-weight: 500;
   color: var(--forest);
@@ -250,7 +264,8 @@ img { max-width: 100%; height: auto; display: block; }
 /* ---------------------------------------------------------------------
    5. HERO
    --------------------------------------------------------------------- */
-.hero { padding-block: clamp(1rem, 3vw, 2rem) var(--section-y); }
+.hero { padding-block: clamp(1rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.5rem); }
+.hero + .about { padding-top: clamp(2.5rem, 5vw, 4rem); }   /* tighter gap after the hero */
 
 .hero-grid {
   display: grid;
@@ -267,6 +282,32 @@ img { max-width: 100%; height: auto; display: block; }
   letter-spacing: -0.02em;
   margin-bottom: 2rem;
 }
+
+/* Short epigraph under the hero intro */
+.hero-quote {
+  margin: 2rem 0 0;
+  padding-left: 1.25rem;
+  border-left: 1px solid var(--clay);
+  max-width: 28em;
+}
+.hero-quote blockquote { margin: 0; }
+.hero-quote p {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  line-height: 1.4;
+  color: var(--forest);
+}
+.hero-quote p::before { content: "\201C"; }
+.hero-quote p::after { content: "\201D"; }
+.hero-quote figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--clay-deep);
+}
+.hero-quote figcaption::before { content: "\2014\00a0"; }
+.hero-quote cite { font-style: italic; }
 
 .hero-actions {
   display: flex;
@@ -814,9 +855,6 @@ blockquote p {
    --------------------------------------------------------------------- */
 .site-nav a[aria-current="page"] { background-size: 100% 1px; }
 
-/* Tighter gap between the intro and the quote that follows it */
-.meet { padding-bottom: clamp(1.5rem, 3vw, 2.5rem); }
-.meet + .quote { padding-top: clamp(2.5rem, 5vw, 4rem); }
 
 .meet-grid {
   display: grid;
@@ -1047,9 +1085,18 @@ blockquote p {
           <h1 id="hero-title">A place to come back to yourself.</h1>
           <p class="lede">
             Spiral Essence is a small, personal practice of Reiki and reflective
-            wellness. Slow sessions and quiet writing for people who are tired of
-            being told they need to be improved.
+            wellness.
           </p>
+
+          <!-- HERO QUOTE: to change it, retype the words in the <p> line
+               (no quotation marks needed, they're added automatically)
+               and the name below it. -->
+          <figure class="hero-quote">
+            <blockquote>
+              <p>I live my life in widening rings that spread out over all things.</p>
+            </blockquote>
+            <figcaption>Rainer Maria Rilke</figcaption>
+          </figure>
           <div class="hero-actions">
             <a class="button" href="#connect">Book a session</a>
             <a class="text-link" href="#about">Read the philosophy</a>
@@ -1176,23 +1223,6 @@ blockquote p {
 
 
     <!-- ============================================================
-         QUOTE
-         Change the words between <p> and </p> to change the quote.
-         ============================================================ -->
-    <section class="section quote" aria-label="A reflection">
-      <div class="container">
-        <figure class="quote-figure">
-          <span class="quote-spiral" aria-hidden="true"></span>
-          <blockquote>
-            <p>Nothing here is asked to be finished. Only noticed, and allowed to soften.</p>
-          </blockquote>
-          <figcaption>From the Spiral Essence notebook</figcaption>
-        </figure>
-      </div>
-    </section>
-
-
-    <!-- ============================================================
          JOURNAL PREVIEW
          Each card opens its article further down this file
          (search for ARTICLE:). To add one, copy an article block.
@@ -1276,6 +1306,10 @@ blockquote p {
               </li>
             </ul>
           </address>
+          <!-- INSTAGRAM: to change the handle, edit the link and text below -->
+          <a class="button button--outline ig-button" href="https://www.instagram.com/spiralessence_/" target="_blank" rel="noopener">
+            <span class="ig-lead">Follow along on </span>Instagram <span class="ig-handle">@spiralessence_</span>
+          </a>
         </div>
 
         <form class="form" id="contact-form" novalidate>
@@ -1493,7 +1527,10 @@ blockquote p {
       <div class="container article-cta-inner">
         <h2 id="cta-title-about">I'd love to hear from you.</h2>
         <p>Tell me a little about what's brought you, or simply say hello.</p>
-        <a class="button button--light" href="#connect">Get in touch</a>
+        <div class="cta-actions">
+          <a class="button button--light" href="#connect">Get in touch</a>
+          <a class="button button--ghost-light" href="https://www.instagram.com/spiralessence_/" target="_blank" rel="noopener">Instagram @spiralessence_</a>
+        </div>
       </div>
     </section>
     </div>
@@ -1779,7 +1816,8 @@ blockquote p {
         <p class="footer-contact">
           Molly Simon, Master Level Reiki Practitioner<br>
           <a href="tel:+13238968037">323-896-8037</a><br>
-          <a href="mailto:spiralessence13@gmail.com">spiralessence13@gmail.com</a>
+          <a href="mailto:spiralessence13@gmail.com">spiralessence13@gmail.com</a><br>
+          <a href="https://www.instagram.com/spiralessence_/" target="_blank" rel="noopener">Instagram @spiralessence_</a>
         </p>
       </div>
 

@@ -1075,7 +1075,60 @@ blockquote p {
   box-shadow: 0 1px 2px rgba(35, 45, 34, 0.12), 0 10px 28px rgba(35, 45, 34, 0.12);
 }
 
-/* Artist statement */
+/* Artist statement: a drop-down that stays closed until clicked */
+.art-statement { padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 7vw, 6rem); }
+.statement-drop { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.statement-drop summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1.6rem;
+}
+.statement-drop summary::-webkit-details-marker { display: none; }
+.sd-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+  color: var(--forest);
+}
+.sd-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 500;
+  color: var(--forest);
+  white-space: nowrap;
+}
+.sd-icon {
+  position: relative;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--forest);
+  border-radius: 50%;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.sd-icon::before,
+.sd-icon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0.9rem;
+  height: 1.5px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+.sd-icon::after { transform: translate(-50%, -50%) rotate(90deg); transition: transform 0.3s ease; }
+.statement-drop[open] .sd-icon::after { transform: translate(-50%, -50%) rotate(0deg); }
+.statement-drop summary:hover .sd-icon { background: var(--forest); color: var(--paper); }
+.sd-close { display: none; }
+.statement-drop[open] .sd-open { display: none; }
+.statement-drop[open] .sd-close { display: inline; }
+.sd-body { max-width: 44rem; padding: 0.75rem 0 3rem; }
+.sd-body p { max-width: none; }
 .statement-sign {
   margin-top: 2rem !important;
   font-family: var(--font-serif);
@@ -1107,10 +1160,8 @@ blockquote p {
 }
 .art-mat img { transition: transform 0.6s ease; }
 .art-mat:hover img { transform: scale(1.02); }
-.art-card .card-meta { margin-bottom: 0.35rem; }
-.art-card h3 { font-size: 1.35rem; margin-bottom: 0.35rem; }
+.art-card h3 { font-size: 1.45rem; font-style: italic; }
 .commission-note { max-width: 40em; }
-.art-desc { margin: 0; max-width: 50ch; font-size: 1rem; line-height: 1.6; color: var(--ink-soft); }
 
 /* Larger view of a painting */
 .art-viewer {
@@ -1158,11 +1209,7 @@ blockquote p {
 @media (max-width: 720px) {
   .art-hero-mat { height: clamp(16rem, 72vw, 24rem); }
   .art-mat { height: clamp(16rem, 80vw, 24rem); }
-  .art-card h3 { font-size: 1.3rem; }
-  .art-desc { font-size: 0.9375rem; line-height: 1.55; }
-}
-@media (max-width: 360px) {
-  .art-desc { font-size: 0.875rem; }
+  .art-card h3 { font-size: 1.35rem; }
 }
 
 .page-view h1:focus { outline: none; }
@@ -1938,7 +1985,7 @@ blockquote p {
         <div class="art-hero-copy">
           <h1 id="art-title" tabindex="-1">Spirals</h1>
           <p class="bio-role">Watercolors by Molly Simon, 2026</p>
-          <p class="lede">A series of watercolors on the spiral, and on the idea that form might carry memory.</p>
+          <p class="lede">Eight watercolors that keep finding their way back to the spiral.</p>
           <div class="hero-actions">
             <a class="button" href="#art-series">See the paintings</a>
             <a class="text-link" href="#artist-statement">Read the artist statement</a>
@@ -1954,22 +2001,25 @@ blockquote p {
     </section>
 
 
-    <!-- ARTIST STATEMENT: retype any paragraph below to change it -->
-    <section class="section" id="artist-statement" aria-labelledby="statement-title">
-      <div class="container about-grid">
-        <div class="about-heading">
-          <h2 id="statement-title">Artist statement</h2>
-          <span class="shape shape--about" aria-hidden="true"></span>
-        </div>
-        <div class="prose">
+    <!-- ARTIST STATEMENT: closed until someone clicks "Read".
+         Retype any paragraph below to change it. -->
+    <section class="art-statement" aria-label="Artist statement">
+      <div class="container">
+        <details class="statement-drop" id="artist-statement">
+          <summary>
+            <span class="sd-title">Artist statement</span>
+            <span class="sd-toggle"><span class="sd-open">Read</span><span class="sd-close">Close</span><span class="sd-icon" aria-hidden="true"></span></span>
+          </summary>
+          <div class="sd-body prose">
           <p class="article-lede">My interest in spirals, and in the patterns that repeat throughout nature, led me to the biologist Rupert Sheldrake and his theory of morphic fields. Trained at Cambridge, Sheldrake began his career studying how plants grow and develop, and from that research came a question biology still struggles to answer: how does an organism know what shape to become? Genes supply the proteins, but they don&#x27;t fully explain why a fern unfurls as a fern or a shell coils as a shell.</p>
           <p>Sheldrake&#x27;s answer is the morphic field, an organizing field that shapes the form and behavior of living systems, much as a magnetic field organizes iron filings. These fields are shaped by what came before, through a process he calls morphic resonance: each time a form appears, it strengthens the pattern for every similar form that follows. In this view, nature works less like a set of eternal laws and more like a set of habits, a memory held in form itself.</p>
           <p>That idea changed how I see my own work. I begin each painting without a composition in mind, and again and again it settles into the spiral. I no longer see that return as a lack of invention, but as a kind of inheritance.</p>
           <p>Watercolor makes this easier to explore, because the medium doesn&#x27;t fully belong to me. Once pigment touches wet paper, it spreads, blooms and settles by its own logic, leaving a record of those forces rather than a picture of them. My role is less to make the image than to set the conditions and pay attention to what happens.</p>
           <p>That attention comes from my work as a Reiki practitioner, where the task is not to direct energy but to make room for it to move. Painting has become the same practice: staying present and receptive, and letting the image find its own shape.</p>
           <p>Seen together, these paintings form one long conversation, each returning to the spiral and adding something new. They ask whether form might be not only structure but memory, and whether painting could be one way of listening for it.</p>
-          <p class="statement-sign">Molly Simon</p>
-        </div>
+            <p class="statement-sign">Molly Simon</p>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -1986,72 +2036,56 @@ blockquote p {
             <button class="art-mat" type="button" aria-label="View Where the Light Gathers larger">
               <img data-photo="art01" src="" alt="Pale green and blue spiral with a rose and gold glow and cobalt strokes in the corner">
             </button>
-            <p class="card-meta"><span>No. 01</span><span>Watercolor on paper, 2026</span></p>
             <h3>Where the Light Gathers</h3>
-            <p class="art-desc">A pale green-and-blue spiral turns beside a rising glow of rose and gold, edged in cobalt.</p>
           </article>
 
           <article class="art-card">
             <button class="art-mat" type="button" aria-label="View Held in Blue larger">
               <img data-photo="art02" src="" alt="Ring of cobalt brushstrokes around a grey cloud with a peach glow, with blue waves below">
             </button>
-            <p class="card-meta"><span>No. 02</span><span>Watercolor on paper, 2026</span></p>
             <h3>Held in Blue</h3>
-            <p class="art-desc">A ring of cobalt strokes circles a quiet grey cloud, rippling out into plum, rose and blue.</p>
           </article>
 
           <article class="art-card">
             <button class="art-mat" type="button" aria-label="View Deep Water Turning larger">
               <img data-photo="art03" src="" alt="Deep ultramarine spiral ringed with teal and green strokes beside soft violet washes">
             </button>
-            <p class="card-meta"><span>No. 03</span><span>Watercolor on paper, 2026</span></p>
             <h3>Deep Water Turning</h3>
-            <p class="art-desc">Ultramarine pools at the center, ringed by teal and green, like looking down into moving water.</p>
           </article>
 
           <article class="art-card">
             <button class="art-mat" type="button" aria-label="View Rose Current larger">
               <img data-photo="art04" src="" alt="Loose loops of coral, gold and pink around a violet center">
             </button>
-            <p class="card-meta"><span>No. 04</span><span>Watercolor on paper, 2026</span></p>
             <h3>Rose Current</h3>
-            <p class="art-desc">Loose loops of coral, gold and pink wind around a violet center with a small red mark.</p>
           </article>
 
           <article class="art-card">
             <button class="art-mat" type="button" aria-label="View Faint Signal larger">
               <img data-photo="art05" src="" alt="Soft blush and sand washes with a faint spiral, rust drips at one edge and a bright blue bloom">
             </button>
-            <p class="card-meta"><span>No. 05</span><span>Watercolor on paper, 2026</span></p>
             <h3>Faint Signal</h3>
-            <p class="art-desc">The quietest piece: a ghost of a spiral in blush and sand, broken open by a bright blue bloom.</p>
           </article>
 
           <article class="art-card">
             <button class="art-mat" type="button" aria-label="View Garden After Rain larger">
               <img data-photo="art06" src="" alt="Wet-into-wet blooms of red, green and gold bleeding into blue and deep olive">
             </button>
-            <p class="card-meta"><span>No. 06</span><span>Watercolor on paper, 2026</span></p>
             <h3>Garden After Rain</h3>
-            <p class="art-desc">Painted wet into wet, red, green and gold blooms bleed into blue and deep olive.</p>
           </article>
 
           <article class="art-card">
             <button class="art-mat" type="button" aria-label="View Ember and Tide larger">
               <img data-photo="art07" src="" alt="Coral and rust strokes weaving through blue and sea-green currents around a pale center">
             </button>
-            <p class="card-meta"><span>No. 07</span><span>Watercolor on paper, 2026</span></p>
             <h3>Ember and Tide</h3>
-            <p class="art-desc">Coral and rust weave through currents of blue and sea green, circling a pale, luminous center.</p>
           </article>
 
           <article class="art-card">
             <button class="art-mat" type="button" aria-label="View Heart Rising larger">
               <img data-photo="art08" src="" alt="Bold red sweep through pink and mauve layers with green and plum strokes and an olive triangle">
             </button>
-            <p class="card-meta"><span>No. 08</span><span>Watercolor on paper, 2026</span></p>
             <h3>Heart Rising</h3>
-            <p class="art-desc">A sweep of red rises through pink and mauve as green and plum strokes flow to the corner.</p>
           </article>
         </div>
       </div>
@@ -2062,7 +2096,7 @@ blockquote p {
     <section class="section article-cta" aria-labelledby="commissions-title">
       <div class="container article-cta-inner">
         <h2 id="commissions-title">Commissions available</h2>
-        <p class="commission-note">I welcome commissions for original watercolors, whether for a home, a practice space or a gift. Each painting in this series is also one of a kind. For commissions, availability or pricing, I'd love to hear from you.</p>
+        <p class="commission-note">If you'd like a painting for your home, your practice space or as a gift, or you'd like to ask about a piece from this series, I'd love to hear from you.</p>
         <div class="cta-actions">
           <a class="button button--light" href="#connect" data-reason="I'd like to ask about art or a commission">Ask about a commission</a>
           <a class="button button--ghost-light" href="https://www.instagram.com/spiralessence_/" target="_blank" rel="noopener">Instagram @spiralessence_</a>
@@ -2315,6 +2349,15 @@ document.querySelectorAll(".lineage-scroll").forEach(function (el) {
       if (select) select.value = link.dataset.reason;
     });
   });
+
+  // "Read the artist statement" links open the drop-down
+  const statement = document.getElementById("artist-statement");
+  if (statement) {
+    document.querySelectorAll('a[href="#artist-statement"]').forEach(function (link) {
+      link.addEventListener("click", function () { statement.open = true; });
+    });
+    if (location.hash === "#artist-statement") statement.open = true;
+  }
 })();
   </script>
 
